@@ -1,0 +1,968 @@
+import csv
+from random import randint
+def append():
+    global EMPname
+    global SEX
+    global DESIG
+    global BASIC
+    EMPname=input('Name?').upper()
+    EMPname = EMPname.replace(' ', '_')
+    SEX=(input(('MALE OR FEMALE? '))).upper()
+    BASIC=input('input BASIC')
+    DESIG=input('input designation')
+def chk():
+    global DOB
+    global d1
+    global m1
+    global y1
+    print()
+    DOB=(input('Enter birth in dd/mm/yy format: '))
+    d1,m1,y1 =DOB.split('/')
+    if int(y1)>2021:
+        print("entered year is out of range...retry\n")
+        chk()
+    if len(y1)<4 or len(y1)>4:
+        print('entered year is out of range...retry\n')
+        chk()
+    elif int(m1)>12:
+        print("entered month is out of range...retry\n")
+        chk()
+    elif int(d1)>31:
+        print("entered day is out of range...retry\n")
+        chk()
+    elif int(m1)==1 or int(m1)==3 or int(m1)==5 or int(m1)==7 or int(m1)==8 or int(m1)==10 or int(m1)==12:
+        maxdays=31
+        if int(d1)>maxdays:
+            print('enter correct date\n')
+            chk()
+    elif int(m1)==4 or int(m1)==6 or int(m1)==9 or int(m1)==11:
+        maxdays=30
+        if int(d1)>maxdays:
+            print('reenter correct date\n')
+            chk()
+    elif int(m1)==2:
+        z=int(y1)
+        if (z%4==0 and z%100!=0) or (z%400== 0):
+            maxdays=29
+            if int(d1)>maxdays:
+                print('reenter correct date\n')
+                chk()
+        else:
+            maxdays=28
+            if int(d1)>maxdays:
+                print('reenter correct date\n')
+                chk()
+def chk2():
+    global DOJ
+    global d2,m2,y2
+    print()
+    DOJ=input('Enter date of joining (dd/mm/yy format)  : ').strip()
+    d2,m2,y2 =(DOJ.split('/'))
+    if int(m2)<0 or int(m2)>12:
+        print('entered month is out of range...retry\n')
+        chk2()
+    elif int(d2)>31:
+        print("entered date is out of range...retry\n")
+        chk2()
+    if len(y2)<4 or len(y2)>4:
+        print('entered year is out of range...retry\n')
+        chk2()
+    elif int(y2)-int(y1)<20:
+        print("entered year is out of range...retry\n")
+        chk2()
+    elif int(m2)==1 or int(m2)==3 or int(m2)==5 or int(m2)==7 or int(m2)==8 or int(m2)==10 or int(m2)==12:
+        maxdays=31
+        if int(d2)>maxdays:
+            print('enter correct date\n')
+            chk2()
+    elif int(m2)==4 or int(m2)==6 or int(m2)==9 or int(m2)==11:
+        maxdays=30
+        if int(d2)>maxdays:
+            print('reenter correct date\n')
+            chk2()
+    elif int(m2)==2:
+        z=int(y1)
+        if (z%4==0 and z%100!=0) or (z%400== 0):
+            maxdays=29
+            if int(d2)>maxdays:
+                print('reenter correct date\n')
+                chk2()
+        else:
+            maxdays=28
+            if int(d2)>maxdays:
+                print('reenter correct date\n')
+                chk2()
+def chk4():
+    global PHONE
+    n2=int(input('iput digits of po'))
+    PHONE=input(f"input {n2} phone number")
+    if PHONE.isnumeric() and len(PHONE)==n2:
+        pass
+    else:
+        print('re enter correct phone number')
+        chk4()
+def chk5():
+    global MOBILE
+    n2=int(input('input digits of phone number'))
+    MOBILE=input(f"input {n2} of mobile number'")
+    if MOBILE.isnumeric() and len(MOBILE)==n2:
+        pass
+    else:
+        print('reenter correct phone number')
+        chk5()
+def appendvaluestothefile():
+    global EMPNO
+    global xxy
+    header=["{0:<3}{1:^30}{2:^10}{3:^20}{4:^20}{5:^25}{6:^20}{7:^10}{8:^10}{9:>20}".format('EMPNO','NAME','SEX','DOB','DOJ','DESIG','BASIC','PHONE','MOBILE','ADDRESS')]
+    fobj=open('EMPsal.CSV', 'w', newline='')
+    cwobj=csv.writer(fobj,delimiter='\t')
+    cwobj.writerow(header)
+    n=int(input('input numebr of records'))
+    xxy=randint(1000,9999)
+    EMPNO=xxy
+    for k in range(n):
+        EMPNO=EMPNO+1
+        address=input('input address')
+        adrress=address.replace(' ','_')
+        append()
+        chk()
+        chk2()
+        chk4()
+        chk5()
+        emp=["{0:<3}{1:^30}{2:^10}{3:^20}{4:^20}{5:^25}{6:^20}{7:^10}{8:^10}{9:>20}".format(EMPNO,EMPname,SEX,DOB,DOJ,DESIG,BASIC,PHONE,MOBILE,address)]
+        cwobj.writerow(emp)
+def chkemp():
+    global EMPname1
+    EMPname1=input('input emp name').upper()
+    EMPname1=EMPname1.replace(' ','_')    
+def chkbasic():
+    global basic1
+    basic1=int(input('input BASIC'))
+def chkdate():
+    global maxdays
+    global y
+    try:
+        dd=int(input('input number of days worked[0-31] ? '))
+        mm=int(input('input the month[1-12]? '))
+        yy=int(input('Year ? '))
+        if int(mm)<0:
+            print('entered month is out of range...retry\n')
+            chkdate()
+        elif int(mm)>12:
+            print("entered month is out of range...retry\n")
+            chkdate()
+        elif int(dd)>31:
+            print("entered date is out of range...retry\n")
+            chkdate()
+        elif int(yy)>2021:
+            print('entered year outta range')
+            chkdate()
+        if mm==1 or mm==3 or mm==5 or mm==7 or mm==8 or mm==10 or mm==12:
+            maxdays=31
+            y=maxdays
+            if int(dd)>maxdays:
+                print('enter correct date  \n')
+                chkdate()
+        elif mm==4 or mm==6 or mm==9 or mm==11:
+            maxdays=30
+            y=maxdays
+            if int(dd)>maxdays:
+                print('reenter correct date kh \n')
+                chkdate()
+        elif mm==2:
+            z=(yy)
+            if (z%4==0 and z%100!=0) or (z%400== 0):
+                maxdays=29
+                y=maxdays
+                if int(dd)>maxdays:
+                    print('reenter correct date\n')
+                    chkdate()
+            else:
+                maxdays=28
+                y=maxdays
+                if int(dd)>maxdays:
+                    print('reenter correct date\n')
+                    chkdate()
+    except:
+        print('entered date out of range')
+        chkdate()
+def chk7():
+    global INCOMETAX
+    global LOAN
+    global x
+    INCOMETAX=float(input('input the incometax paid?'))
+    if INCOMETAX.is_integer():
+        pass
+    else:
+        print('RE ENTER CORRECT \n')
+        chk7()
+    loan=float(input('input the loan taken by the employee'))
+    if loan.is_integer():
+        pass
+    else:
+        print('re enter correct\n')
+        chk7()
+    SALARY_ADVANCE=float(input('input salary advance'))
+    x=loan+INCOMETAX+SALARY_ADVANCE
+def chkxyz():
+    global DA
+    global HRA
+    global CONVEYANCE
+    global GROSS
+    global NET
+    global DAYSWORKED
+    global leavs
+    leavs=input('input leaves takes by employee')
+    if leavs.isnumeric():
+        pass
+    else:
+        print('WRONG number of leaves entered\n')
+        chkxyz()
+    if leavs==0:
+        DAYSWORKED=int(maxdays)
+    else:
+        DAYSWORKED=int(int(maxdays)-int(leavs))
+    z=int(basic1*DAYSWORKED)/int(y)
+    BASIC=z
+    DA=(0.55*basic1)
+    HRA=(0.35*basic1)
+    CONVEYANCE=0.15*basic1
+    GROSS=BASIC+DA+HRA+CONVEYANCE
+    NET=GROSS-x
+def appendall():
+    global EMPNO1
+    header=["{0:<3}{1:^20}{2:^30}{3:^30}{4:^30}{5:^30}{6:^30}{7:^30}{8:^30}".format('EMPNO','EMPname','DAYSWORKED','BASIC','DA','HRA','CONVEYANCE','GROSS','NET')]
+    fobj=open('MONTHLYPAYFILE.CSV','w',newline='')
+    cwobj=csv.writer(fobj,delimiter='\t')
+    cwobj.writerow(header)
+    n2=int(input('input number of rec'))
+    EMPNO1=xxy
+    for k in range(n2):
+        chkemp()
+        EMPNO1=EMPNO1+1
+        chkbasic()
+        chkdate()
+        chk7()
+        chkxyz()
+        pay=["{0:<3}{1:^20}{2:^30}{3:^30}{4:^30}{5:^30}{6:^30}{7:^30}{8:^30}".format(EMPNO1,EMPname1,DAYSWORKED,basic1,DA,HRA,CONVEYANCE,GROSS,NET)]
+        cwobj.writerow(pay)        
+def additionrecords2():
+    global EMPName
+    global sex
+    global desig
+    EMPName=input('Name? ').upper()
+    EMPName = EMPName.replace(' ', '_')
+    sex=input('MALE OR FEMALE? ').upper()
+    desig=input('input designation')
+def chk22():
+    global dob
+    global d1,m1,y1
+    global maxdays
+    print()
+    dob=(input('Enter birth in dd/mm/yy format: '))
+    d1,m1,y1 =dob.split('/')
+    if len(y1)<4 or len(y1)>4:
+        print('entered year is out of range...retry\n')
+        chk22()
+    elif int(y1)>2021:
+        print("entered year is out of range...retry\n")
+        chk22()
+    elif int(m1)>12:
+        print("entered month is out of range...retry\n")
+        chk22()
+    elif int(m1)==1 or int(m1)==3 or int(m1)==5 or int(m1)==7 or int(m1)==8 or int(m1)==10 or int(m1)==12:
+        maxdays=31
+        if int(d1)>maxdays:
+            print('enter correct date\n')
+            chk22()
+    elif int(m1)==4 or int(m1)==6 or int(m1)==9 or int(m1)==11:
+        maxdays=30
+        if int(d1)>maxdays:
+            print('reenter correct date\n')
+            chk22()
+    elif int(m1)==2:
+        z=int(y1)
+        if (z%4==0 and z%100!=0) or (z%400== 0):
+            maxdays=29
+            if int(d1)>maxdays:
+                print('reenter correct date\n')
+                chk22()
+        else:
+            maxdays=2
+            if int(d1)>maxdays:
+                print('reenter correct date\n')
+                chk22()
+def chk23():
+    global doj
+    global maxdays
+    global d2,m2,y2
+    print()
+    doj=input('Enter date of joining (dd/mm/yy format)  : ').strip()
+    d2,m2,y2 =doj.split('/')
+    if int(m2)<0:
+        print('entered month is out of range...retry\n')
+        chk23()
+    elif int(y2)>2021 or int(y2)<int(y1):
+        print("entered year is out of range...retry\n")
+        chk23()
+    if len(y2)<4 or len(y2)>4:
+        print('entered year is out of range...retry\n')
+        chk23()
+    elif int(m2)==1 or int(m2)==3 or int(m2)==5 or int(m2)==7 or int(m2)==8 or int(m2)==10 or int(m2)==12:
+        maxdays=31
+        if int(d2)>maxdays:
+            print('enter correct date\n')
+            chk23()
+    elif int(m2)==4 or int(m2)==6 or int(m2)==9 or int(m2)==11:
+        maxdays=30
+        if int(d2)>maxdays:
+            print('reenter correct date\n')
+            chk23()
+    elif int(m2)==2:
+        z=int(y2)
+        if (z%4==0 and z%100!=0) or (z%400== 0):
+            maxdays=29
+            if int(d2)>maxdays:
+                print('reenter correct date\n')
+                chk23()
+        else:
+            maxdays=28
+            if int(d1)>maxdays:
+                print('reenter correct date\n')
+                chk23()
+def chk33():
+    global basic
+    basic=input('input BASIC')
+    
+def chk44():
+    global phone
+    n1=int(input('iput digits of po'))
+    phone=input(f"input {n1} phone number")
+    if phone.isnumeric() and len(phone)==n1:
+        pass
+    else:
+        print('re enter correct phone number')
+        chk44()
+def chk55():
+    global mobile
+    n1=int(input('input digits of phone number'))
+    mobile=input(f"input {n1} of mobile number'")
+    if mobile.isnumeric() and len(mobile)==n1:
+        pass
+    else:
+        print('reenter correct phone number')
+        chk55()
+def appendvaluestothefile1():
+    fobj=open('EMPsal.CSV','a',newline='')
+    cwobj=csv.writer(fobj,delimiter='\t')
+    n1=int(input('input number of records'))
+    for k in range(n1):
+        address=input('input address')
+        address=address.replace(' ','_')
+        additionrecords2()
+        try:
+            EMPNOo=EMPNO+1
+        except:
+            EMPNOo=randint(1000,9999)
+        chk22()
+        chk23()
+        chk33()
+        chk44()
+        chk55()
+        xyzy=["{0:<3}{1:^30}{2:^10}{3:^20}{4:^20}{5:^25}{6:^20}{7:^10}{8:^10}{9:>20}".format(EMPNOo,EMPName,sex,dob,doj,desig,basic,phone,mobile,address)]
+        cwobj.writerow(xyzy)
+def searchroll():
+    print('1,to search using emp code')
+    print('2,to search for emp name')
+    print('0, to break')
+    while True:
+        ch=int(input('input choice'))
+        if ch==1:
+            fobj=open('EMPsal.CSV')
+            crobj=csv.reader(fobj,skipinitialspace=True,delimiter=' ')
+            next(crobj)
+            roll=int(input('Roll to search? '))
+            found=0
+            for k in crobj:
+                if roll==int(k[0]):
+                    print("{0:30}{1:30}{2:30}{3:10}{4:20}{5:25}{6:10}{7:10}{8:15}{9:20}".format(k[0],k[1],k[2],k[3],k[4],k[5],k[6],k[7],k[8],k[9]))
+                    found=1
+            if found==0:
+                print(roll,'not found in the file')
+            fobj.close()            
+        elif ch==2:
+            fobj=open('EMPsal.CSV')
+            crobj=csv.reader(fobj,skipinitialspace=True,delimiter=' ')
+            next(crobj)
+            name=(input('Name to search? ')).upper()
+            found=0
+            for k in crobj:
+                if name==(k[1]):
+                    print("{0:30}{1:30}{2:30}{3:10}{4:20}{5:25}{6:10}{7:10}{8:15}".format(k[0],k[1],k[2],k[3],k[4],k[5],k[6],k[7],k[8]))
+                    found=1
+                    break
+            fobj.close()
+            if found==0:
+                print(name,'not found in the file')
+        elif ch==0:
+            break        
+        else:
+            print('invalid input')
+def modification():
+    print('to modify the following fields')
+    print('0, to break')
+    print('1, to modify sex')
+    print('2, to modify DOB')
+    print('3, to modify doj')
+    print('4, to modify empdesig')
+    print('5, to modifybasic salar')
+    print('6, to modify phone number')
+    print('7, to modify mobile number')
+    print('8, to modify address')
+    while True:
+        ch=int(input('input ch?'))
+        if ch==1:
+            fobj=open('EMPsal.CSV')
+            crobj=csv.reader(fobj,skipinitialspace=True,delimiter=' ') 
+            code=int(input('input emp code'))
+            newlist, found, y=[],0,[]
+            fobj.seek(0)
+            header=next(crobj)
+            if header!=None:
+                for emp in crobj:
+                    if code==int(emp[0]):
+                        emp[2]=(input('input change'))
+                        found=1
+                    newlist+=[emp]
+            if found==1:
+                fobj.close()
+                fobj=open('EMPsal.CSV', 'w', newline='')
+                cwobj=csv.writer(fobj,delimiter='\t')
+                for y in header:
+                    z=["{0:<3}{1:^30}{2:^10}{3:^20}{4:^20}{5:^25}{6:^20}{7:^10}{8:^10}{9:>20}".format('EMPNO','NAME','SEX','DOB','DOJ','DESIG','BASIC','PHONE','MOBILE','ADDRESS')]
+                cwobj.writerow(z)
+                for k in newlist:
+                    x=["{0:<3}{1:^20}{2:^10}{3:^10}{4:^10}{5:^25}{6:^10}{7:^10}{8:^10}{9:>20}".format(k[0],k[1],k[2],k[3],k[4],k[5],k[6],k[7],k[8],k[9])]
+                    cwobj.writerow(x)
+                fobj.close()
+                print('Record updated From the File')
+            else:
+                print('not found')           
+        elif ch==2:
+            def date():
+                isValidDate = True
+                try:
+                    fobj=open('EMPsal.CSV')
+                    crobj=csv.reader(fobj,skipinitialspace=True,delimiter=' ')
+                    code=int(input('input emp code'))
+                    newlist,found,x=[],0,[]
+                    header=next(crobj)
+                    if header!=None:
+                        for emp in crobj:
+                            if code==int(emp[0]):
+                                found=1
+                                print()
+                                DOB=(input('Enter birth  : '))
+                                d1,m1,y1 =DOB.split('/')
+                                emp[3]=DOB
+                                if int(y1)>2021:
+                                    print("entered year is out of range...retry\n")
+                                    chk()
+                                elif int(m2)<0 or int(m1)>12 or int(d1)>31 or int(d1)<0:
+                                    print('entered month is out of range...retry\n')
+                                    chk2()
+                                elif int(m1)==1 or int(m1)==3 or int(m1)==5 or int(m1)==7 or int(m1)==8 or int(m1)==10 or int(m1)==12:
+                                    maxdays=31
+                                    if int(d1)>maxdays:
+                                        print('enter correct date\n')
+                                        chk()
+                                elif int(m1)==4 or int(m1)==6 or int(m1)==9 or int(m1)==11:
+                                    maxdays=30
+                                    if int(d1)>maxdays:
+                                        print('reenter correct date\n')
+                                        chk()
+                                elif int(m1)==2:
+                                    z=int(y1)
+                                    if (z%4==0 and z%100!=0) or (z%400== 0):
+                                        maxdays=29
+                                        if int(d1)>maxdays:
+                                            print('reenter correct date\n')
+                                            chk()
+                                    else:
+                                        maxdays=28
+                                        if int(d1)>maxdays:
+                                            print('reenter correct date\n')
+                                            chk()
+                                else :
+                                    print("Inputted date is not valid...retry\n")
+                                    chk()
+                            newlist+=[emp]
+                except:
+                    print("Inputted date is not valid...retry\n")
+                    chk()
+                if found==1:
+                    fobj=open('EMPsal.CSV', 'w', newline='')
+                    fobj.seek(0)
+                    cwobj=csv.writer(fobj,delimiter='\t')
+                    for y in header:
+                        z=["{0:<3}{1:^20}{2:^10}{3:^10}{4:^10}{5:^25}{6:^10}{7:^10}{8:^10}{9:>20}".format('EMPNO','NAME','SEX','DOB','DOJ','DESIG','BASIC','PHONE','MOBILE','ADDRESS')]
+                    cwobj.writerow(z)
+                    for k in newlist:
+                        x=["{0:<3}{1:^20}{2:^10}{3:^10}{4:^10}{5:^25}{6:^10}{7:^10}{8:^10}{9:>20}".format(k[0],k[1],k[2],k[3],k[4],k[5],k[6],k[7],k[8],k[9])]
+                        cwobj.writerow(x)
+                    fobj.close()
+                    print('Record updated From the File')
+                else:
+                    print('record not found')
+            date()
+        elif ch==3:
+            def chkdoj():
+                fobj=open('EMPsal.CSV')
+                crobj=csv.reader(fobj,skipinitialspace=True,delimiter=' ')
+                code=int(input('input emp code'))
+                newlist, found,x=[],0,[]
+                header=next(crobj)
+                if header!=None:
+                    for emp in crobj:
+                        if code==int(emp[0]):
+                            found=1
+                            DOJ=input('Enter  date of joining (dd/mm/yy format)  : ').strip()
+                            emp[4]=DOJ
+                            d2,m2,y2 =(DOJ.split('/'))
+                            if int(m2)<0 or int(m2)>12 or int(d2)>31 or int(d2)<0:
+                                print('entered month is out of range...retry\n')
+                                chk2()
+                            elif int(m2)==1 or int(m2)==3 or int(m2)==5 or int(m2)==7 or int(m2)==8 or int(m2)==10 or int(m2)==12:
+                                maxdays=31
+                                if int(d2)>maxdays:
+                                    print('enter correct date\n')
+                                    chk2()
+                            elif int(m2)==4 or int(m2)==6 or int(m2)==9 or int(m2)==11:
+                                maxdays=30
+                                if int(d2)>maxdays:
+                                    print('reenter correct date\n')
+                                    chk2()
+                            elif int(m2)==2:
+                                z=int(y1)
+                                if (z%4==0 and z%100!=0) or (z%400== 0):
+                                    maxdays=29
+                                    if int(d2)>maxdays:
+                                        print('reenter correct date\n')
+                        newlist+=[emp]
+                if found==1:
+                    fobj=open('EMPsal.CSV', 'w', newline='')
+                    fobj.seek(0)
+                    cwobj=csv.writer(fobj,delimiter='\t')
+                    for y in header:
+                        z=["{0:<3}{1:^20}{2:^10}{3:^10}{4:^10}{5:^25}{6:^10}{7:^10}{8:^10}{9:>20}".format('EMPNO','NAME','SEX','DOB','DOJ','DESIG','BASIC','PHONE','MOBILE','ADDRESS')]
+                    cwobj.writerow(z)
+                    for k in newlist:
+                        x=["{0:<3}{1:^20}{2:^10}{3:^10}{4:^10}{5:^25}{6:^10}{7:^10}{8:^10}{9:>20}".format(k[0],k[1],k[2],k[3],k[4],k[5],k[6],k[7],k[8],k[9])] 
+                        cwobj.writerow(x)
+                    fobj.close()
+                    print('Record updated From the File')
+                
+                else:
+                    print('record not found')
+            chkdoj()      
+        elif ch==4:
+            fobj=open('EMPsal.CSV')
+            crobj=csv.reader(fobj,skipinitialspace=True,delimiter=' ')
+            code=int(input('input emp code'))
+            newlist,found, x=[],0,[]
+            header=next(crobj)
+            if header!=None:
+                for emp in crobj:
+                    if code==int(emp[0]):
+                        emp[5]=(input('input change'))
+                        found=1
+                    newlist+=[emp]
+            fobj.close()
+            if found==1:
+                fobj=open('EMPsal.CSV', 'w', newline='')
+                fobj.seek(0)
+                cwobj=csv.writer(fobj,delimiter='\t')
+                for y in header:
+                    z=["{0:<3}{1:^20}{2:^10}{3:^10}{4:^10}{5:^25}{6:^10}{7:^10}{8:^10}{9:>20}".format('EMPNO','NAME','SEX','DOB','DOJ','DESIG','BASIC','PHONE','MOBILE','ADDRESS')]
+                cwobj.writerow(z)
+                for k in newlist:
+                    x=["{0:<3}{1:^20}{2:^10}{3:^10}{4:^10}{5:^25}{6:^10}{7:^10}{8:^10}{9:>20}".format(k[0],k[1],k[2],k[3],k[4],k[5],k[6],k[7],k[8],k[9])]   
+                    cwobj.writerow(x)
+                fobj.close()
+                print('Record updated From the File')                
+            else:
+                print('code not found in the file')
+        elif ch==5:
+                fobj=open('EMPsal.CSV')
+                crobj=csv.reader(fobj,skipinitialspace=True,delimiter=' ')
+                code=int(input('input emp code'))
+                newlist, found, x=[],0,[]
+                header=next(crobj)
+                if header!=None:
+                    for emp in crobj:
+                        if code==int(emp[0]):
+                            emp[6]=(input('input change'))
+                            found=1
+                        newlist+=[emp]
+                fobj.close()
+                if found==1:
+                    fobj=open('EMPsal.CSV', 'w', newline='')
+                    fobj.seek(0)
+                    cwobj=csv.writer(fobj,delimiter='\t')
+                    for y in header:
+                        z=["{0:<3}{1:^20}{2:^10}{3:^10}{4:^10}{5:^25}{6:^10}{7:^10}{8:^10}{9:>20}".format('EMPNO','NAME','SEX','DOB','DOJ','DESIG','BASIC','PHONE','MOBILE','ADDRESS')]
+                    cwobj.writerow(z)
+                    for k in newlist:
+                        x=["{0:<3}{1:^20}{2:^10}{3:^10}{4:^10}{5:^25}{6:^10}{7:^10}{8:^10}{9:>20}".format(k[0],k[1],k[2],k[3],k[4],k[5],k[6],k[7],k[8],k[9])]
+                        cwobj.writerow(x)
+                    fobj.close()
+                    print('Record updated From the File')              
+                else:
+                    print('record not found')
+        elif ch==6:
+            def chk45():
+                fobj=open('EMPsal.CSV') 
+                crobj=csv.reader(fobj,skipinitialspace=True,delimiter=' ')
+                code=int(input('input emp code'))
+                newlist, found,x=[],0,[]
+                header=next(crobj)
+                if header!=None:
+                    for emp in crobj:
+                        if code==int(emp[0]):
+                            found=1
+                            n1=int(input('iput digits of phone number'))
+                            phone=input(f"input {n1} phone number")
+                            if phone.isnumeric() and len(phone)==n1:
+                                emp[7]=phone
+                                pass
+                            else:
+                                print('re enter correct phone number')
+                                chk45()
+                        newlist+=[emp]
+                fobj.close()
+                if found==1:
+                    fobj=open('EMPsal.CSV', 'w', newline='')
+                    fobj.seek(0)
+                    cwobj=csv.writer(fobj,delimiter='\t')
+                    for y in header:
+                        z=["{0:<3}{1:^20}{2:^10}{3:^10}{4:^10}{5:^25}{6:^10}{7:^10}{8:^10}{9:>20}".format('EMPNO','NAME','SEX','DOB','DOJ','DESIG','BASIC','PHONE','MOBILE','ADDRESS')]
+                    cwobj.writerow(z)
+                    for k in newlist:
+                        x=["{0:<3}{1:^20}{2:^10}{3:^10}{4:^10}{5:^25}{6:^10}{7:^10}{8:^10}{9:>20}".format(k[0],k[1],k[2],k[3],k[4],k[5],k[6],k[7],k[8],k[9])]
+                        cwobj.writerow(x)
+                    fobj.close()
+                    print('Record updated From the File')
+                else:
+                    print('record not found')
+            chk45()
+        elif ch==7:
+            def chk46():
+                fobj=open('EMPsal.CSV')
+                crobj=csv.reader(fobj,skipinitialspace=True,delimiter=' ')
+                code=int(input('input emp code'))
+                newlist, found,x=[],0,[]
+                header=next(crobj)
+                if header!=None:
+                    for emp in crobj:
+                        if code==int(emp[0]):
+                            found=1
+                            n1=int(input('iput digits of mo'))
+                            mobile=input(f"input {n1} phone number")
+                            if mobile.isnumeric() and len(mobile)==n1:
+                                emp[8]=mobile
+                                pass
+                            else:
+                                print('re enter correct phone number')
+                                chk46()
+                        newlist+=[emp]
+                fobj.close()
+                if found==1:
+                    fobj=open('EMPsal.CSV', 'w', newline='')
+                    fobj.seek(0)
+                    cwobj=csv.writer(fobj,delimiter='\t')
+                    for y in header:
+                        z=["{0:<3}{1:^20}{2:^10}{3:^10}{4:^10}{5:^25}{6:^10}{7:^10}{8:^10}{9:>20}".format('EMPNO','NAME','SEX','DOB','DOJ','DESIG','BASIC','PHONE','MOBILE','ADDRESS')]
+                    cwobj.writerow(z)
+                    for k in newlist:
+                        x=["{0:<3}{1:^20}{2:^10}{3:^10}{4:^10}{5:^25}{6:^10}{7:^10}{8:^10}{9:>20}".format(k[0],k[1],k[2],k[3],k[4],k[5],k[6],k[7],k[8],k[9])]
+                        cwobj.writerow(x)
+                    fobj.close()
+                    print('Record updated From the File')
+                else:
+                    print('record not found')
+            chk46()
+        elif ch==8:
+            fobj=open('EMPsal.CSV')
+            crobj=csv.reader(fobj,skipinitialspace=True,delimiter=' ')
+            code=int(input('input emp code'))
+            newlist, found, x=[],0,[]
+            header=next(crobj)
+            if header!=None:
+                for emp in crobj:
+                    if code==int(emp[0]):
+                        found=1
+                        address=(input('input change'))
+                        address= address.replace(' ', '_')
+                        emp[9]=address
+                        found=1
+                    newlist+=[emp]
+            fobj.close()
+            if found==1:
+                fobj=open('EMPsal.CSV', 'w', newline='')
+                fobj.seek(0)
+                cwobj=csv.writer(fobj,delimiter='\t')            
+                for y in header:
+                    z=["{0:<3}{1:^20}{2:^10}{3:^10}{4:^10}{5:^25}{6:^10}{7:^10}{8:^10}{9:>20}".format('EMPNO','NAME','SEX','DOB','DOJ','DESIG','BASIC','PHONE','MOBILE','ADDRESS')]
+                cwobj.writerow(z)
+                for k in newlist:
+                    x=["{0:<3}{1:^20}{2:^10}{3:^10}{4:^10}{5:^25}{6:^10}{7:^10}{8:^10}{9:>20}".format(k[0],k[1],k[2],k[3],k[4],k[5],k[6],k[7],k[8],k[9])]
+                    cwobj.writerow(x)
+                fobj.close()
+                print('Record updated From the File')
+                break
+            else:
+                print('record not found')
+        elif ch==0:
+            break
+        else:
+            print('invalid input')
+def display():
+    print('1,to display the details of each employee')
+    print('2, to print salary statement ')
+    print('or 3 to print salary slip format')
+    S=[]
+    while True:
+        ch=int(input('input choice[0-3]'))
+        if ch==1:
+            fobj=open('EMPsal.CSV','r',newline='')
+            crobj=csv.reader(fobj,skipinitialspace=True,delimiter=' ')
+            next(crobj)
+            print("{0:30}{1:30}{2:30}{3:10}{4:20}{5:25}{6:10}{7:10}{8:15}{9:20}".format('EMPNO','NAME','SEX','DOB','DOJ','DESIG','BASIC','PHONE','MOBILE','ADDRESS').rstrip())
+            for k in crobj:
+                print("{0:30}{1:30}{2:30}{3:10}{4:20}{5:25}{6:10}{7:10}{8:15}{9:20}".format(k[0],k[1],k[2],k[3],k[4],k[5],k[6],k[7],k[8],k[9]).rstrip())
+            fobj.close()           
+        elif ch==2:
+            fobj=open('MONTHLYPAYFILE.CSV')
+            crobj=csv.reader(fobj,skipinitialspace=True,delimiter=' ')
+            frobj=open('EMPsal.csv')
+            croobj=csv.reader(frobj,skipinitialspace=True,delimiter=' ')
+            next(croobj)
+            next(crobj)
+            print('salary statement for the month of:FEBRUARY 2007')
+            print('-'*100)
+            print("{:6s}{:25s}{:25s}{:25s}{:25s}".format('Eno','Ename','Desig','Basic','hra'))
+            for x in croobj:
+                for k in crobj:
+                    y=("{:6s}{:25s}{:25s}{:25s}{:25s}".format(k[0],k[1],x[5],k[3],k[5]))
+                    print(y)
+                    break
+            print('-'*100)
+                                                           
+        elif ch==3:
+            emocode=int(input('input code'))
+            fobj=open('MONTHLYPAYFILE.CSV')
+            crobj=csv.reader(fobj,skipinitialspace=True,delimiter=' ')
+            next(crobj)
+            found=0
+            for k in crobj:
+                x=float(k[7])
+                z=float(k[8])
+                y=x-z
+                if emocode==int(k[0]):
+                    found=1
+                    print()
+                    print('salary statement for the month of:FEBRUARY 2007')
+                    print(k[0],'                                                                         EMP NAME=',' ' ,k[1])
+                    print('-'*100)
+                    print('BASIC        =',   k[3],'                                                         DEDUCTIONS=',y)
+                    print()
+                    print('DA           =',        k[4])
+                    print()
+                    print('HRA          =',       k[5])
+                    print()  
+                    print('CONVEYANCE   =',k[6])
+                    print('-'*100)
+                    print('GROSS PAY=', k[7])
+            if found==0:
+                print('emp code not found')
+        elif ch==0:
+            break
+        else:
+            print('invlallid input')      
+while True:
+    print('''
+                                     ---------------------main menu-----------------------------------
+                                    |select from following'                                          | 
+                                    |1 to add records to emp file and to add records to monthly file |                       
+                                    |2 to add new employee records                                   |
+                                    |3 to search for a record using emp name or emp code             |
+                                    |4 to modify                                                     |
+                                    |5 to display                                                    |
+                                    ------------------------------------------------------------------''')
+    ch=int(input('input choice[0-7]')) 
+    if ch==1:
+        appendvaluestothefile()
+        print(' add records to monthly file')
+        appendall()
+    elif ch==2:
+        appendvaluestothefile1()
+    elif ch==3:
+        searchroll()
+    elif ch==4:
+        modification()
+    elif ch==5:
+        display()
+    elif ch==0:     
+        break
+    else:
+        print('invalid input')
+'''
+                                     ---------------------main menu-----------------------------------
+                                    |select from following'                                          | 
+                                    |1 to add records to emp file and to add records to monthly file |                       
+                                    |2 to add new employee records                                   |
+                                    |3 to search for a record using emp name or emp code             |
+                                    |4 to modify                                                     |
+                                    |5 to display                                                    |
+                                    ------------------------------------------------------------------
+input choice[0-7]1
+input numebr of records3
+input addressINDIA
+Name?MUNNAPPA
+MALE OR FEMALE? MALE
+input BASIC12000
+input designationDRIVER
+
+Enter birth in dd/mm/yy format: 1/1/1999
+
+Enter date of joining (dd/mm/yy format)  : 1/2/2020
+iput digits of po8
+input 8 phone number29384756
+input digits of phone number8
+input 8 of mobile number'86758492
+input addressINDIA
+Name?SUDARSHAN
+MALE OR FEMALE? MALE
+input BASIC35000
+input designationMANAGER
+
+Enter birth in dd/mm/yy format: 31/3/1995
+
+Enter date of joining (dd/mm/yy format)  : 25/4/2021
+iput digits of po8
+input 8 phone number19284756
+input digits of phone number8
+input 8 of mobile number'84938473
+input addressINDIA
+Name?KESHAV
+MALE OR FEMALE? MAL
+input BASIC20000
+input designationSECURITY
+
+Enter birth in dd/mm/yy format: 1/1/1994
+
+Enter date of joining (dd/mm/yy format)  : 4/6/2020
+iput digits of po8
+input 8 phone number19483948
+input digits of phone number8
+input 8 of mobile number'19238543
+ add records to monthly file
+input number of rec3
+input emp nameMUNNAPPA
+input BASIC12000
+input number of days worked[0-31] ? 31
+input the month[1-12]? 3
+Year ? 2020
+input the incometax paid?1000
+input the loan taken by the employee0
+input salary advance1500
+input leaves takes by employee1
+input emp nameSUDARSHAN
+input BASIC35000
+input number of days worked[0-31] ? 30
+input the month[1-12]? 4
+Year ? 2022
+entered year outta range
+input number of days worked[0-31] ? 30
+input the month[1-12]? 5
+Year ? 2021
+input the incometax paid?1000
+input the loan taken by the employee1200
+input salary advance15000
+input leaves takes by employee2
+input emp nameKESHAV
+input BASIC20000
+input number of days worked[0-31] ? 30
+input the month[1-12]? 6
+Year ? 2021
+input the incometax paid?0
+input the loan taken by the employee1020
+input salary advance1200
+input leaves takes by employee1
+----------------------------------------------------
+1,to search using emp code
+2,to search for emp name
+0, to break
+input choice1
+Roll to search? 7654
+7654                          MUNNAPPA                      MALE                          1/1/1999  1/2/2020            DRIVER                   12000     29384756  86758492       INDIA               
+
+input choice2
+Name to search? KESHAV
+7656                          KESHAV                        MAL                           1/1/1994  4/6/2020            SECURITY                 20000     19483948  19238543       
+----------------------------------------------------
+input choice[0-7]4
+to modify the following fields
+0, to break
+1, to modify sex
+2, to modify DOB
+3, to modify doj
+4, to modify empdesig
+5, to modifybasic salar
+6, to modify phone number
+7, to modify mobile number
+8, to modify address
+input ch?1
+input emp code7656
+input changemale
+
+Record updated From the File
+------------------------------------------------------
+input choice[0-7]5
+1,to display the details of each employee
+2, to print salary statement 
+or 3 to print salary slip format
+input choice[0-3]1
+EMPNO                         NAME                          SEX                           DOB       DOJ                 DESIG                    BASIC     PHONE     MOBILE         ADDRESS
+7654                          MUNNAPPA                      MALE                          1/1/1999  1/2/2020            DRIVER                   12000     29384756  86758492       INDIA
+7655                          SUDARSHAN                     MALE                          31/3/1995 25/4/2021           MANAGER                  35000     19284756  84938473       INDIA
+7656                          KESHAV                        male                          1/1/1994  4/6/2020            SECURITY                 20000     19483948  19238543       INDIA
+--------------------------------------------------------
+
+input choice[0-3]2
+salary statement for the month of:FEBRUARY 2007
+----------------------------------------------------------------------------------------------------
+Eno   Ename                    Desig                    Basic                    hra                      
+7654  MUNNAPPA                 DRIVER                   12000                    4200.0                   
+7655  SUDARSHAN                MANAGER                  35000                    12250.0                  
+7656  KESHAV                   SECURITY                 20000                    7000.0                   
+----------------------------------------------------------------------------------------------------
+
+
+input choice[0-3]3
+input code7654
+
+salary statement for the month of:FEBRUARY 2007
+7654                                                                          EMP NAME=   MUNNAPPA
+----------------------------------------------------------------------------------------------------
+BASIC        = 12000                                                          DEDUCTIONS= 2500.0
+
+DA           = 6600.000000000001
+
+HRA          = 4200.0
+
+CONVEYANCE   = 1800.0
+----------------------------------------------------------------------------------------------------
+GROSS PAY= 24212.90322580645
+
+'''
